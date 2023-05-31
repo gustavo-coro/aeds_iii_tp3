@@ -9,6 +9,7 @@
 
 #include "lista.h"
 #include "processamento_texto.h"
+#include "calcula_casamento.h"
 #include "ler_arquivo.h"
 
 #endif

@@ -27,3 +27,30 @@ int* tabelaDeslocamentosBMH (char* texto) {
     }
     return tabelaDeslocamentos;
 }
+
+// Tabela com a mascara de bits para os caracteres do texto
+int** tabelaMascaraBitsSA (char* texto) {
+    int size = strlen(texto);
+    int** tabelaMascaraBits = (int**) malloc(sizeof(int*) * 26);
+    for (int i = 0; i < 26; i++) {
+        tabelaMascaraBits[i] = (int*) malloc(sizeof(int) * size);
+        for (int j = 0; j < size; j++) {
+            tabelaMascaraBits[i][j] = 0;
+        }
+    }
+    for (int i = 0; i < size; i++) {
+        for (int j = i; j < size; j++) {
+            if (texto[i] == texto[j]) {
+                tabelaMascaraBits[texto[i] - 97][j] = 1;
+            }
+        }
+    }
+    return tabelaMascaraBits;
+}
+
+void freeTabelaMascaraBitsSA (int** tabelaMascaraBits) {
+    for (int i = 0; i < 26; i++) {
+        free(tabelaMascaraBits[i]);
+    }
+    free(tabelaMascaraBits);
+}

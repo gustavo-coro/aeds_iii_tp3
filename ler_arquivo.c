@@ -95,6 +95,9 @@ void readFile (FILE* inFile, FILE* outFile, char *solution) {
             }
             case '3': {
                 //chamadas de funcao para a terceira solucao
+                int** tabelaMascaraBits = tabelaMascaraBitsSA(padrao);
+                resultado = solucaoShiftAnd (listaTexto, listaPadrao, tabelaMascaraBits);
+                freeTabelaMascaraBitsSA(tabelaMascaraBits);
                 break;
             }
             
@@ -114,108 +117,4 @@ void readFile (FILE* inFile, FILE* outFile, char *solution) {
         }
     }
     
-}
-
-int forcaBruta (list* padrao, list* texto) {
-    node* temporario = texto->first;
-    for (int i = 0; i < texto->size; i++) {
-        node* temporarioPadrao = padrao->first;
-        node* temporarioTexto = temporario;
-        for (int j = 0; j < padrao->size; j++) {
-            if (temporarioTexto->data != temporarioPadrao->data) {
-                //nao houve casamento
-                break;
-            } else if (j == padrao->size-1) {
-                return temporario->position;
-            }
-            temporarioTexto = temporarioTexto->next;
-            temporarioPadrao = temporarioPadrao->next;
-        }
-        temporarioTexto = temporario;
-        temporarioPadrao = padrao->first;
-        for (int j = 0; j < padrao->size; j++) {
-            if (temporarioTexto->data != temporarioPadrao->data) {
-                //nao houve casamento
-                break;
-            } else if (j == padrao->size-1) {
-                return temporario->position;
-            }
-            temporarioTexto = temporarioTexto->before;
-            temporarioPadrao = temporarioPadrao->next;
-        }
-        temporario = temporario->next;
-    }
-    return -1;
-}
-
-int solucaoBMH (list* texto, list* padrao, int* tabelaDeslocamentos) {
-    int i = padrao->size;
-    int posicaoCasamento = -1;
-    node* temporario = texto->first;
-
-    // solucao com texto da esquerda para a direita
-    for (int j = 0; j < (padrao->size-1); j++) {
-        temporario = temporario->next;
-    }
-    while (i < (texto->size + padrao->size)) {
-        node* temporarioTexto = temporario;
-        node* temporarioPadrao = padrao->last;
-        int j = padrao->size;
-        while ((j > 0) && (temporarioPadrao->data == temporarioTexto->data)) {
-            j = j - 1;
-            temporarioPadrao = temporarioPadrao->before;
-            temporarioTexto = temporarioTexto->before;
-        }
-        if (j == 0) {
-            posicaoCasamento = temporarioTexto->next->position;
-            break;
-        }
-
-        int deslocamento = tabelaDeslocamentos[temporario->data - 97];
-        i = i + deslocamento;
-        for (int k = 0; k < (deslocamento); k++) {
-            temporario = temporario->next;
-        }
-    }
-    int resultado = posicaoCasamento;
-    posicaoCasamento = -1;
-    i = padrao->size;
-    temporario = texto->last;
-
-    // solucao com texto da direita para a esquerda
-    for (int j = 0; j < (padrao->size-1); j++) {
-        temporario = temporario->before;
-    }
-    while (i < (texto->size + padrao->size)) {
-        node* temporarioTexto = temporario;
-        node* temporarioPadrao = padrao->last;
-        int j = padrao->size;
-        while ((j > 0) && (temporarioPadrao->data == temporarioTexto->data)) {
-            j = j - 1;
-            temporarioPadrao = temporarioPadrao->before;
-            temporarioTexto = temporarioTexto->next;
-        }
-        if (j == 0) {
-            posicaoCasamento = temporarioTexto->before->position;
-            break;
-        }
-
-        int deslocamento = tabelaDeslocamentos[temporario->data - 97];
-        i = i + deslocamento;
-        for (int k = 0; k < (deslocamento); k++) {
-            temporario = temporario->before;
-        }
-    }
-    // confirmando qual o primeiro casamento, caso ocorra mais de um
-    if (posicaoCasamento == -1) {
-        return resultado;
-    } else if (resultado == -1) {
-        return posicaoCasamento;
-    } else {
-        if (posicaoCasamento <= resultado) {
-            return posicaoCasamento;
-        } else {
-            return resultado;
-        }
-    }
 }

@@ -5,5 +5,7 @@
 
 list* retornaLista (char*);
 int* tabelaDeslocamentosBMH (char*);
+int** tabelaMascaraBitsSA (char*);
+void freeTabelaMascaraBitsSA (int**);
 
 #endif
