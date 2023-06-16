@@ -1,6 +1,4 @@
-#include <getopt.h>
-
-#include "main.h"
+#include "../include/ler_arquivo.h"
 
 // ***************************************************
 // FUNCAO readLine RETIRADA DE:
@@ -38,7 +36,7 @@ char *readLine (FILE *infile) {
 }
 
 int openFile (int argc, char **argv, FILE **in, char *solution, FILE **out) {
-    
+    // verifica se foi passado o numero de parametros necessarios
     if (argc < 3) {
         perror("Faltam parametros para executar corretamente.\n");
         return -1;
@@ -47,8 +45,11 @@ int openFile (int argc, char **argv, FILE **in, char *solution, FILE **out) {
         return -1;
     }
 
+    // recebe o arquivo de entrada
     *in = fopen(argv[1], "r");
+    // recebe a solucao desejada
     *solution = *argv[2];
+    // verifica se o arquivo de entrada esta em outra pasta e copia seu nome para criar o arquivo de saida
     char* nomeArquivo = strrchr (argv[1], '/');
     if (nomeArquivo == NULL) {
         nomeArquivo = strtok(argv[1], ".");
@@ -57,45 +58,56 @@ int openFile (int argc, char **argv, FILE **in, char *solution, FILE **out) {
         nomeArquivo = strtok(nomeArquivo, ".");
     }
     nomeArquivo = strcat(nomeArquivo, ".out");
+    // abre o arquivo de saida
     *out = fopen(nomeArquivo, "w+");
 
-    return 1; //retorna em caso de sucesso
+    return 1; // retorna em caso de sucesso
 }
 
+// funcao que le o arquivo de entrada e escreve a resposta no arquivo de saida
 void readFile (FILE* inFile, FILE* outFile, char *solution) {
     char *line = NULL;
     int casosTeste;
-    //ler a primeira linha com o numero de casos de teste
+    // ler a primeira linha com o numero de casos de teste
     if ((line = readLine(inFile)) != NULL) {
         sscanf(line, "%d", &casosTeste);
     }
+    // le cada caso de teste e calcula seu resultado
     for (int contLine = 0; contLine < casosTeste; contLine++) {
         if ((line = readLine(inFile)) != NULL) {
             char* padrao;
             char* texto;
             padrao = strtok(line, " ");
             texto = strtok(NULL, "\n");
+            // coloca o padrao e o texto em uma lista circular necessaria para as solucoes
             list* listaPadrao = retornaLista(padrao);
             list* listaTexto = retornaLista(texto);
+            // variavel que guardara a posicao do casamento, caso exista
             int resultado = -1;
+            // verifica qual solucao foi escolhida
             switch (*solution) {
             case '1': {
-                //chamadas de funcao para a primeira solucao
+                // chamadas de funcao para a primeira solucao
+                // calcula se existem casamentos usando um algoritmo forca bruta
                 resultado = forcaBruta(listaPadrao, listaTexto);
                 break;
             }
 
             case '2': {
-                //chamadas de funcao para a segunda solucao
+                // chamadas de funcao para a segunda solucao
                 int* tabelaDeslocamentos;
+                // tabela com os deslocamentos de cada caracter do alfabeto
                 tabelaDeslocamentos = tabelaDeslocamentosBMH(padrao);
+                // calcula se existem casamentos usando o algoritmo de Boyer-Moore-Horspool
                 resultado = solucaoBMH(listaTexto, listaPadrao, tabelaDeslocamentos);
                 free(tabelaDeslocamentos);
                 break;
             }
             case '3': {
-                //chamadas de funcao para a terceira solucao
+                // chamadas de funcao para a terceira solucao
+                // cria uma tabela com a mascara de bits de cada letra do alfabeto
                 int** tabelaMascaraBits = tabelaMascaraBitsSA(padrao);
+                // calcula se existem casamentos usando o algoritmo Shift-And
                 resultado = solucaoShiftAnd (listaTexto, listaPadrao, tabelaMascaraBits);
                 freeTabelaMascaraBitsSA(tabelaMascaraBits);
                 break;
@@ -106,11 +118,13 @@ void readFile (FILE* inFile, FILE* outFile, char *solution) {
                 exit(0);
             }
             }
+            // imprime o resultado no arquivo de saida
             if (resultado < 0) { // nao houve casamento
                 fprintf(outFile, "N\n");
             } else { // houve casamento na posicao indicada por resultado
                 fprintf(outFile, "S %d\n", resultado);
             }
+            // desaloca as variaveis usadas
             freeList(listaPadrao);
             freeList(listaTexto);
             free(line);

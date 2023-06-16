@@ -1,13 +1,13 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include "lista.h"
+#include "../include/lista.h"
 
+// aloca para a memoria uma lista vazia
 list* startList () {
     list* l = (list*) malloc(sizeof(list));
     l->size = 0;
     return l;
 }
 
+// adiciona o primeiro item da lista
 void addFirstItem (list* l, char data) {
     node* f = (node*) malloc(sizeof(node));
     f->data = data;
@@ -19,6 +19,7 @@ void addFirstItem (list* l, char data) {
     l->size = 1;
 }
 
+// adiciona demais itens na lista
 void addItem (list* l, char data) {
     node* f = (node*) malloc(sizeof(node));
     f->data = data;
@@ -31,6 +32,7 @@ void addItem (list* l, char data) {
     l->size ++;
 }
 
+// desaloca a lista e seus componentes
 void freeList (list* l) {
     for (int i = 0; i < l->size-1; i++) {
         node* temp;

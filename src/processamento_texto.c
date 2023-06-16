@@ -1,5 +1,6 @@
-#include "main.h"
+#include "../include/processamento_texto.h"
 
+// retorna uma lista circular com a string passada como paramentro
 list* retornaLista (char* string) {
     list* lista = startList();
     addFirstItem (lista, string[0]);
@@ -48,6 +49,7 @@ int** tabelaMascaraBitsSA (char* texto) {
     return tabelaMascaraBits;
 }
 
+// desaloca a tabela de mascara de bits usada no shift-and
 void freeTabelaMascaraBitsSA (int** tabelaMascaraBits) {
     for (int i = 0; i < 26; i++) {
         free(tabelaMascaraBits[i]);

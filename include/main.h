@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
-#include <limits.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 #include "lista.h"
 #include "processamento_texto.h"
