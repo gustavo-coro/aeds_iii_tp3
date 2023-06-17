@@ -25,8 +25,9 @@ int main (int argc, char **argv) {
 
     // variaveis usadas para armazenar o tempo de execucao do programa
     struct timeval tempoInicio, tempoFim, tempoDiferenca;
-    struct rusage usage;
+    struct rusage usageStart, usageEnd;
 
+    getrusage(RUSAGE_SELF, &usageStart);
     gettimeofday(&tempoInicio, NULL);
 
     // abre o arquivo de entrada e armazena a solucao requisitada
@@ -41,14 +42,18 @@ int main (int argc, char **argv) {
     readFile(inFile, outFile, solution);
 
     // armazena o tempo no fim do programa
-    getrusage(RUSAGE_SELF, &usage);
+    getrusage(RUSAGE_SELF, &usageEnd);
     gettimeofday(&tempoFim, NULL);
     timeval_subtract(&tempoDiferenca, &tempoFim, &tempoInicio);
 
     // armazena os diferentes tempos em microssegundos
-    double tempoUsuario = (double) usage.ru_utime.tv_sec * 1000000 + usage.ru_utime.tv_usec;
-    double tempoSistema = (double) usage.ru_stime.tv_sec * 1000000 + usage.ru_stime.tv_usec;
+    double tempoUsuarioInicio = (double) usageStart.ru_utime.tv_sec * 1000000 + usageStart.ru_utime.tv_usec;
+    double tempoSistemaInicio = (double) usageStart.ru_stime.tv_sec * 1000000 + usageStart.ru_stime.tv_usec;
+    double tempoUsuarioFim = (double) usageEnd.ru_utime.tv_sec * 1000000 + usageEnd.ru_utime.tv_usec;
+    double tempoSistemaFim = (double) usageEnd.ru_stime.tv_sec * 1000000 + usageEnd.ru_stime.tv_usec;
     double tempoGetTimeofDay = (double) ((tempoDiferenca.tv_sec * 1000000) + tempoDiferenca.tv_usec);
+    double tempoUsuario = tempoUsuarioFim - tempoUsuarioInicio;
+    double tempoSistema = tempoSistemaFim - tempoSistemaInicio;
     double tempoRuUsage = tempoUsuario + tempoSistema;
 
     // imprime os tempos de execucao em microssegundos

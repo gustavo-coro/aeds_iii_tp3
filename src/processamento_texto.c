@@ -17,14 +17,9 @@ int* tabelaDeslocamentosBMH (char* texto) {
     int size = strlen(texto);
     for (int i = 0; i < 26; i++) {
         tabelaDeslocamentos[i] = size;
-    }    
-    for (int i = 0; i < size; i++) {
-        for (int j = 1; j < size; j++) {
-            if (texto[(size - 1) - j] == texto[i]) {
-                tabelaDeslocamentos[texto[i] - 97] = j;
-                break;
-            }
-        }
+    } 
+    for (int i = 0; i < size - 1; i++) {
+        tabelaDeslocamentos[texto[i] - 97] = size - i - 1;
     }
     return tabelaDeslocamentos;
 }
@@ -40,11 +35,7 @@ int** tabelaMascaraBitsSA (char* texto) {
         }
     }
     for (int i = 0; i < size; i++) {
-        for (int j = i; j < size; j++) {
-            if (texto[i] == texto[j]) {
-                tabelaMascaraBits[texto[i] - 97][j] = 1;
-            }
-        }
+        tabelaMascaraBits[texto[i] - 97][i] = 1;
     }
     return tabelaMascaraBits;
 }
