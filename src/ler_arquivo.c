@@ -106,10 +106,10 @@ void readFile (FILE* inFile, FILE* outFile, char *solution) {
             case '3': {
                 // chamadas de funcao para a terceira solucao
                 // cria uma tabela com a mascara de bits de cada letra do alfabeto
-                int** tabelaMascaraBits = tabelaMascaraBitsSA(padrao);
+                int* tabelaMascaraBits = tabelaMascaraBitsSA(padrao);
                 // calcula se existem casamentos usando o algoritmo Shift-And
                 resultado = solucaoShiftAnd (listaTexto, listaPadrao, tabelaMascaraBits);
-                freeTabelaMascaraBitsSA(tabelaMascaraBits);
+                free(tabelaMascaraBits);
                 break;
             }
             
