@@ -151,7 +151,7 @@ int solucaoShiftAnd (list* texto, list* padrao, int** tabelaMascaraBits) {
     }
     int repeticoes = padrao->size + texto->size;
     // procurando casamento da esquerda para a direita no texto
-    for (int i = 0; i < repeticoes; i++) {
+    for (int i = 0; i <= repeticoes; i++) {
         // shift de 1 para a direita
         shiftUmDireita(conjuntoPrefixos, padrao->size);
         // and com a mascara da posicao atual do texto
@@ -170,8 +170,11 @@ int solucaoShiftAnd (list* texto, list* padrao, int** tabelaMascaraBits) {
     // guardando o resultado do casamento
     int resultado = posicaoCasamento;
     temporario = texto->last;
+    for (int i = 0; i < padrao->size; i++) {
+        conjuntoPrefixos[i] = 0;
+    }
     // procurando casamento da esquerda para a direita no texto
-    for (int i = 0; i < repeticoes; i++) {
+    for (int i = 0; i <= repeticoes; i++) {
         // shift de 1 para a direita
         shiftUmDireita(conjuntoPrefixos, padrao->size);
         // and com a mascara da posicao atual do texto
@@ -186,6 +189,9 @@ int solucaoShiftAnd (list* texto, list* padrao, int** tabelaMascaraBits) {
                 posicaoCasamento = temporario->position;
             } else if (posicaoCasamento > temporario->position) {
                 posicaoCasamento = temporario->position;
+            }
+            for (int i = 0; i < padrao->size-1; i++) {
+                temporario = temporario->before;
             }
         }
         temporario = temporario->before;
