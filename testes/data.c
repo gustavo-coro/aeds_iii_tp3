@@ -11,13 +11,13 @@ int main(int argc, char **argv) {
     FILE *exit = fopen(argv[1], "a");
     time_t t;
 
-    int maxCasosTeste = 25;
-    int maxCharPadrao = 100;
+    int maxCasosTeste = 100;
+    int maxCharPadrao = 64;
     int maxCharTexto = 10000;
     int casosTeste;
 
     srand((unsigned)time(&t));
-    casosTeste = 1 + (rand() % maxCasosTeste);
+    casosTeste = 1;// + (rand() % maxCasosTeste);
     fprintf(exit, "%d\n", casosTeste);
     while (casosTeste > 0) {
         int tamPadrao, tamTexto;

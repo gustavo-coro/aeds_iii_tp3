@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set up variables for the script
-NUM_RUNS=5  # Number of times to run the process_data program
+NUM_RUNS=100  # Number of times to run the process_data program
 DATA_FILE="randomData.txt"  # Name of the input file to create
 
 # Loop through the number of runs and generate random data each time
