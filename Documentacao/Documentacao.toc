@@ -1,0 +1,15 @@
+\babel@toc {brazil}{}\relax 
+\contentsline {section}{\numberline {1}INTRODUÇÃO}{1}{}%
+\contentsline {subsection}{\numberline {1.1}Objetivo}{1}{}%
+\contentsline {subsection}{\numberline {1.2}Motivação}{1}{}%
+\contentsline {section}{\numberline {2}ABORDAGEM DO PROBLEMA}{2}{}%
+\contentsline {subsection}{\numberline {2.1}Força bruta}{2}{}%
+\contentsline {subsection}{\numberline {2.2}Boyer-Moore-Horspool}{4}{}%
+\contentsline {subsection}{\numberline {2.3}Shift-and}{6}{}%
+\contentsline {section}{\numberline {3}ANÁLISE DE COMPLEXIDADE}{8}{}%
+\contentsline {subsection}{\numberline {3.1}Força bruta}{8}{}%
+\contentsline {subsection}{\numberline {3.2}Boyer-Moore-Horspool}{9}{}%
+\contentsline {subsection}{\numberline {3.3}Shift-and}{10}{}%
+\contentsline {subsection}{\numberline {3.4}Análise empírica da performance das soluções}{10}{}%
+\contentsline {section}{\numberline {4}CONCLUSÃO}{12}{}%
+\contentsline {section}{REFERÊNCIAS}{14}{}%
