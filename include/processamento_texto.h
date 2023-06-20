@@ -7,6 +7,6 @@
 
 list* retornaLista (char*);
 int* tabelaDeslocamentosBMH (char*);
-unsigned long* tabelaMascaraBitsSA (char*);
+__int128_t* tabelaMascaraBitsSA (char*);
 
 #endif

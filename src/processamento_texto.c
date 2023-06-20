@@ -25,14 +25,14 @@ int* tabelaDeslocamentosBMH (char* texto) {
 }
 
 // Tabela com a mascara de bits para os caracteres do texto
-unsigned long* tabelaMascaraBitsSA (char* texto) {
+__int128_t* tabelaMascaraBitsSA (char* texto) {
     int size = strlen(texto);
-    unsigned long* tabelaMascaraBits = (unsigned long*) malloc(sizeof(unsigned long) * 26);
+    __int128_t* tabelaMascaraBits = (__int128_t*) malloc(sizeof(__int128_t) * 26);
     for (int i = 0; i < 26; i++) {
         tabelaMascaraBits[i] = 0;
     }
     for (int i = 0; i < size; i++) {
-        unsigned long temp = 1;
+        __int128_t temp = 1;
         temp = (temp << (size - i - 1));
         tabelaMascaraBits[texto[i] - 97] |= temp;
     }

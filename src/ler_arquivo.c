@@ -104,12 +104,9 @@ void readFile (FILE* inFile, FILE* outFile, char *solution) {
                 break;
             }
             case '3': {
-                if (listaPadrao->size > 64) {
-                    printf("O limite da solução Shift-And e um padrao de tamanho 64! Por favor, tente executar o caso de teste %d com uma das outas solucoes.\n", contLine+1);
-                }
                 // chamadas de funcao para a terceira solucao
                 // cria uma tabela com a mascara de bits de cada letra do alfabeto
-                unsigned long* tabelaMascaraBits = tabelaMascaraBitsSA(padrao);
+                __int128_t* tabelaMascaraBits = tabelaMascaraBitsSA(padrao);
                 // calcula se existem casamentos usando o algoritmo Shift-And
                 resultado = solucaoShiftAnd (listaTexto, listaPadrao, tabelaMascaraBits);
                 free(tabelaMascaraBits);

@@ -140,14 +140,14 @@ int solucaoBMH (list* texto, list* padrao, int* tabelaDeslocamentos) {
 }
 
 // solucao usando o algoritmo Shift-And
-int solucaoShiftAnd (list* texto, list* padrao, unsigned long* tabelaMascaraBits) {
-    unsigned long bitTamanhoPadrao = 1;
+int solucaoShiftAnd (list* texto, list* padrao, __int128_t* tabelaMascaraBits) {
+    __int128_t bitTamanhoPadrao = 1;
     bitTamanhoPadrao = (bitTamanhoPadrao << (padrao->size - 1));
     int posicaoCasamento = -1;
     // temporario usado para caminhar pelo texto
     node* temporario = texto->first;
     // variavel que guarda os prefixos que casam com o texto lido
-    unsigned long conjuntoPrefixos = 0;
+    __int128_t conjuntoPrefixos = 0;
     int repeticoes = padrao->size + texto->size;
     // procurando casamento da esquerda para a direita no texto
     for (int i = 0; i <= repeticoes; i++) {
